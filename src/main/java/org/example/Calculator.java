@@ -8,6 +8,7 @@ public class Calculator {
         Calculator calc  = new Calculator();
         Scanner scan = new Scanner(System.in);
         int choice;
+        double num;
         double n1,n2;
         System.out.println("Welcome to scientific calculator");
         do{
@@ -33,6 +34,17 @@ public class Calculator {
             else{
                 switch (choice){
                     case 1:
+                        System.out.println("Square root option selected\n");
+                        System.out.println("Enter number: ");
+                        try{
+                            num = scan.nextDouble();
+                        }catch(InputMismatchException error){
+                            System.out.println("Invalid input entered .. please enter number");
+                            // Yet to add logger info
+                            return;
+                        }
+                        squareroot(num);
+                        break;
                         
                 }
             }
@@ -40,5 +52,11 @@ public class Calculator {
 
 
 
+    }
+    public static double squareroot(Double num){
+        double ans = Math.sqrt(num);
+        System.out.println("Square root of " + num +" is " + ans);
+        //yet to add logger info
+        return ans;
     }
 }

@@ -48,3 +48,17 @@ jobs:
 
       - name: Push Docker image
         run: docker push hims0301/calculator_devops:latest
+
+
+  deploy:
+    needs: build-push-docker-Image
+    runs-on: self-hosted
+    steps:
+      - name: Pull Docker image
+        run: docker pull hims0301/calculator_devops:latest
+      - name: Stop running calculator-container
+        run: docker stop calculator-container || true
+      - name: remove container named calculator-container
+        run: docker rm calculator-container || true
+      - name: Start new container
+        run: docker run --name calculator-container -d -p 3000:3000 hims0301/calculator_devops:latest

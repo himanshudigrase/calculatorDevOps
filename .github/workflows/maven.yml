@@ -61,4 +61,4 @@ jobs:
       - name: remove container named calculator-container
         run: docker rm calculator-container || true
       - name: Start new container
-        run: docker run --name calculator-container -d hims0301/calculator_devops:latest /bin/bash
+        run: docker run -it --name calculator-container hims0301/calculator_devops:latest /bin/bash

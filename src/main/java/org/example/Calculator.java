@@ -2,8 +2,10 @@ package org.example;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class Calculator {
+    private static final Logger logger = LogManager.getLogger(Calculator.class);
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int choice;
@@ -40,6 +42,7 @@ public class Calculator {
                         }catch(InputMismatchException error){
                             System.out.println("Invalid input entered .. please enter number");
                             // Yet to add logger info
+                            logger.info("Invalid Input! Closing Application");
                             return;
                         }
                         squareroot(num);
@@ -54,6 +57,7 @@ public class Calculator {
                         catch (InputMismatchException error){
                             System.out.println("Invalid input entered. Please enter integer");
                             // logger
+                            logger.info("Invalid Input! Closing Application");
                             return;
                         }
                         factorial(fact_num);
@@ -68,6 +72,7 @@ public class Calculator {
                         catch (InputMismatchException error){
                             System.out.println("Invalid input entered.");
                             // logger
+                            logger.info("Invalid Input! Closing Application");
                             return;
                         }
                          naturalLog(num);
@@ -82,6 +87,7 @@ public class Calculator {
                         catch (InputMismatchException error){
                             System.out.println("Invalid input entered.");
                             // logger
+                            logger.info("Invalid Input! Closing Application");
                             return;
                         }
                         System.out.println("Enter exponent");
@@ -100,6 +106,7 @@ public class Calculator {
         double ans = Math.sqrt(num);
         System.out.println("Square root of " + num +" is " + ans);
         //yet to add logger info
+        logger.info("SquareRoot calculation");
         return ans;
     }
     public static int factorial(int num){
@@ -107,6 +114,7 @@ public class Calculator {
         if(num<0){
             System.out.println("Number should be positive");
             // logger
+            logger.info("Negative Number entered! - in Factorial function");
             return 0;
         }
         for(int i=1;i<=num;i++){
@@ -114,6 +122,7 @@ public class Calculator {
         }
         System.out.println("Result is "+ans);
         //logger
+        logger.info("Factorial calculation");
         return ans;
 
     }
@@ -121,6 +130,7 @@ public class Calculator {
     public static double naturalLog(double num){
         double ans = Math.log(num);
         // logger
+        logger.info("NaturalLog calculation");
         System.out.println("The result is "+ans);
         return ans;
     }
@@ -129,6 +139,7 @@ public class Calculator {
         double ans = Math.pow(num,exp);
         System.out.println("The result is "+ans);
         //logger
+        logger.info("Power calculation");
         return ans;
     }
 }

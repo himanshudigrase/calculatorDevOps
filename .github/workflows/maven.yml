@@ -51,7 +51,7 @@ jobs:
 
 
   deploy:
-    needs: build-push-docker-Image
+    needs: publish
     runs-on: self-hosted
     steps:
       - name: Pull Docker image

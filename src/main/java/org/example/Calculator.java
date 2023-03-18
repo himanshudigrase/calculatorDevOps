@@ -124,7 +124,6 @@ public class Calculator {
         //logger
         logger.info("Factorial calculation");
         return ans;
-
     }
 
     public static double naturalLog(double num){

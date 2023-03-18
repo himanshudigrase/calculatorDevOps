@@ -1,0 +1,9 @@
+2023-03-18 15:20:02,963 [Calculator.java] [INFO] org.example.Calculator - NaturalLog calculation
+2023-03-18 15:20:10,562 [Calculator.java] [INFO] org.example.Calculator - Factorial calculation
+2023-03-18 18:32:44,330 [Calculator.java] [INFO] org.example.Calculator - NaturalLog calculation
+2023-03-18 18:33:36,108 [Calculator.java] [INFO] org.example.Calculator - SquareRoot calculation
+2023-03-18 18:42:25,164 [Calculator.java] [INFO] org.example.Calculator - Power calculation
+2023-03-18 18:42:33,722 [Calculator.java] [INFO] org.example.Calculator - Factorial calculation
+2023-03-18 18:42:39,061 [Calculator.java] [INFO] org.example.Calculator - SquareRoot calculation
+2023-03-18 18:42:54,044 [Calculator.java] [INFO] org.example.Calculator - SquareRoot calculation
+2023-03-18 18:43:02,935 [Calculator.java] [INFO] org.example.Calculator - Invalid Input! Closing Application

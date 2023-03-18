@@ -13,7 +13,7 @@ public class Calculator {
         int fact_num;
         System.out.println("Welcome to scientific calculator");
         do{
-            System.out.println("Which operaton would you lke to perform?");
+            System.out.println("Which operation would you lke to perform?");
             System.out.println("1.Square Root");
             System.out.println("2. Factorial");
             System.out.println("3. Natural Logarithm");

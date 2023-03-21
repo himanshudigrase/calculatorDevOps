@@ -1,12 +1,11 @@
-﻿
-
-# Software Production Engineering
-
-## Mini Project - Scientific Calculator with DevOps
-
-**Himanshu Shankar Digrase : MT2022155**
-
-## Table of Contents
+﻿---
+title: SPE Mini Project-DevOps Calculator.
+author:
+  - Himanshu Shankar Digrase, MT2022155
+date: March 2023
+toc: yes
+---
+<!-- ## Table of Contents
 1. [Introduction](#introduction)
    -  [What and Why DevOps ?](#what-and-why-devops)
    -  [Tools Used](#tools-used)
@@ -30,15 +29,16 @@
     - [Errors occured during CI/CD in configuring Github Actions](#errorschallenges-occured-during-cicd-in-configuring-github-actions)
     - [Running Calculator Application on Container Image](#running-calculator-application-on-container-image)
 9. [Monitoring Tool: ELK Stack](#8-monitoring-tool-elk-stack)
-10.   [URLs and Script Files](#urls-and-script-file)
-## **Introduction**
+10.   [URLs and Script Files](#urls-and-script-file) -->
 \pagebreak
+
+## **Introduction**
 I have developed a command-line scientific calculator application for the SPE mini project. It is a Java language based  scientific calculator application with 4 operations -
 
-- Square root function - √x
-- Factorial function - x !
-- Natural logarithm (base е ) - ln(x)
-- Power function - x b
+1. Square root - $\sqrt{x}$
+2. Factorial - $x!$
+3. Power - $x^a$
+4. Logarithmic - $\log({x})$
 
 The project is built using the maven build tool and, It is following DevOps practices.
 
@@ -58,6 +58,7 @@ DevOps is a set of practices that combines Software Development (Dev) and IT Ope
 8. **Continuous Deployment:** Github Actions
 9. **Monitoring Tool:** ELK Stack (visualization using - Kibana)
 
+\pagebreak
 
 
 
@@ -67,12 +68,17 @@ Implemented 4 functions for scientific calculator operations - added menu to cho
 
 Created maven project on IntelliJ IDE - it has created maven folder structure which contains src folder which will contain main function of application, test folder for JUnit test cases and pom.xml file which will handle the project dependencies.
 
-![](1.png)![](3.png)
-![](2.png)
+
+![1.png](1.png){width=400px height=400px}
+![1.png](2.png){width=400px height=400px}
+![1.png](3.png){width=400px height=400px}
+
 
 Executing Calculator application on locally on IntelliJ
 
-![](4.png)
+![](4.png){width=400px height=300px}
+\pagebreak
+
 
 ## **2. Project Build / Project Management Tool - Maven**
 
@@ -95,6 +101,9 @@ Run the command, mvn clean install
 
 ![](5.png)
 
+\pagebreak
+
+
 ## **3. Unit testing Tool- JUnit (ver. 4.13.2)**
 
 JUnit is a unit testing framework for the Java programming language. JUnit has been important in the development of test-driven development. Following are snippets from the Calculator Project that implements two types of unit test cases for each of the calculator operations - method.
@@ -106,6 +115,7 @@ True negative, assertNotEquals, where we expect the method to not be equal to wh
 ![](6.png)
 ![](7.png)
 
+\pagebreak
 
 ## **4 . Source Code management Tool - Git with GitHub**
 
@@ -136,6 +146,7 @@ and then configured the Maven project of my local repository to update the local
 
 ![](11.png)
 
+\pagebreak
 
 
 ## **5. Logger / Log File Generator - log4j**
@@ -159,6 +170,7 @@ Now we need to add logger functions in the main application code which uses the 
 >*logger.info("Power calculation");*
 >
 >*logger.info("Invalid Input! Closing Application");*
+\pagebreak
 
 
 ## **6. Containerization - Docker**
@@ -186,6 +198,7 @@ In this project, we need to create a container that executes the built Maven pro
 ![](14.png)
 
 Once image is created by following steps in Dockerfile, next step is to push this image into DockerHub which is going to be automated by Github Actions script *(covered in next section)*
+\pagebreak
 
 
 
@@ -196,7 +209,6 @@ Once image is created by following steps in Dockerfile, next step is to push thi
 ![](15.jpg)
 
 ### The components of GitHub Actions
-____
 You can configure a GitHub Actions workflow to be triggered when an event occurs in your repository, such as a pull request being opened or an issue being created. Your workflow contains one or more jobs which can run in sequential order or in parallel. Each job will run inside its own virtual machine runner, or inside a container, and has one or more steps that either run a script that you define or run an action, which is a reusable extension that can simplify your workflow.
 
 ![](16.png)
@@ -235,52 +247,47 @@ name: Java CI with Maven
         branches: [ "master" ]
 
     jobs:
-        build:
-            runs-on: ubuntu-latest
-
-            steps:
-            - uses: actions/checkout@v3
-            - name: Set up JDK 19
-              uses: actions/setup-java@v3
-              with:
-                java-version: '19'
-                distribution: 'temurin'
-                cache: maven
-            - name: Build with Maven
-              run: mvn -B package --file pom.xml
-
-        publish:
+      build:
           runs-on: ubuntu-latest
           steps:
-          - name: Checkout code
-            uses: actions/checkout@v2
-
-          - name: Build Docker image
-            run: docker build -t hims0301/calculator_devops:latest .
-
-          - name: Log in to Docker registry
-            uses: docker/login-action@v1
+          - uses: actions/checkout@v3
+          - name: Set up JDK 19
+            uses: actions/setup-java@v3
             with:
-              registry: docker.io
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_PASSWORD }}
-
-          - name: Push Docker image
-            run: docker push hims0301/calculator_devops:latest
-
-
-        deploy:
-          needs: publish
-          runs-on: self-hosted
-          steps:
-            - name: Pull Docker image
-              run: docker pull hims0301/calculator_devops:latest
-            - name: Stop running calculator-container
-              run: docker stop calculator-container || true
-            - name: remove container named calculator-container
-              run: docker rm calculator-container || true
-            - name: Start new container
-              run: docker run --name calculator-container -d -t hims0301/calculator_devops:latest java -jar calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar
+              java-version: '19'
+              distribution: 'temurin'
+              cache: maven
+          - name: Build with Maven
+            run: mvn -B package --file pom.xml
+      publish:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Build Docker image
+          run: docker build -t hims0301/calculator_devops:latest .
+        - name: Log in to Docker registry
+          uses: docker/login-action@v1
+          with:
+            registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        - name: Push Docker image
+          run: docker push hims0301/calculator_devops:latest
+      deploy:
+        needs: publish
+        runs-on: self-hosted
+        steps:
+          - name: Pull Docker image
+            run: docker pull hims0301/calculator_devops:latest
+          - name: Stop running calculator-container
+            run: docker stop calculator-container || true
+          - name: remove container named calculator-container
+            run: docker rm calculator-container || true
+          - name: Start new container
+            run: docker run --name calculator-container -d -t hims0301/calculator_devops:latest 
+            java -jar calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar
+\pagebreak
 
 
 ### **Understanding the workflow file**
@@ -356,22 +363,28 @@ To help you understand how YAML syntax is used to create a workflow file, this s
       - name: remove container named calculator-container
         run: docker rm calculator-container || true
       - name: Start new container
-        run: docker run --name calculator-container -d -t hims0301/calculator_devops:latest java -jar calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar
+        run: docker run --name calculator-container -d -t hims0301/calculator_devops:latest 
+        java -jar calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 > Above steps pulls docker image to our localhost and makes a new container (if it doesn't exist) and runs the .jar file        
 
 ![](18.png)
 ![](19.png)
+\pagebreak
 
 ### **Errors/Challenges occured during CI/CD in configuring Github Actions**
 
 1. Unable to locate Dockerfile.
+
 ![](17.png)   
 
 >Solution: Relocated Dockerfile to project directory from .github/workflows folder
 
+\pagebreak
+
 2. Got error of input device not a tty due to -t flag specified in *docker run* command
+
 ![](20.png)
 
 >Solution: Removed -t flag from docker run command
@@ -381,6 +394,7 @@ To help you understand how YAML syntax is used to create a workflow file, this s
 >Solution: Configured both platforms with JDK 19
 
 
+\pagebreak
 
 
 ### Running Calculator Application on Container Image
@@ -398,6 +412,7 @@ To run application image on container
 
 ![](22.png)
 
+\pagebreak
 
 
 ## **8. Monitoring Tool: ELK Stack**
@@ -412,18 +427,24 @@ Kibana Visualization of log-file using - **GROK** pattern to decode logging mess
 <!-- ![](Aspose.Words.a85a04f8-eee2-4752-bf8a-ffd516886fab.072.png) -->
 
 **GROK pattern  →**
-
+  ```
     %{HTTPDATE:timestamp_string} \[%{GREEDYDATA:thread}\] \[%{LOGLEVEL:level}\] %{GREEDYDATA:logger} \- %{GREEDYDATA:message}
-
+  ```
 
 ![](25.png)
+
+![](24.png)
+
+\pagebreak
+
 
 ### **Kibana Visualization**
 
 ![](23.png)
+![](26.png)
 
-![](24.png)
 
+\pagebreak
 
 
 ### **URLs and Script File**
@@ -447,62 +468,59 @@ Repository - <https://hub.docker.com/repository/docker/hims0301/calculator_devop
             branches: [ "master" ]
 
     jobs:
-        build:
-            runs-on: ubuntu-latest
-            steps:
-            - uses: actions/checkout@v3
-            - name: Set up JDK 19
-              uses: actions/setup-java@v3
+      build:
+          runs-on: ubuntu-latest
+          steps:
+          - uses: actions/checkout@v3
+          - name: Set up JDK 19
+            uses: actions/setup-java@v3
+            with:
+              java-version: '19'
+              distribution: 'temurin'
+              cache: maven
+          - name: Build with Maven
+              run: mvn -B package --file pom.xml
+      publish:
+          runs-on: ubuntu-latest
+          steps:
+          - name: Checkout code
+            uses: actions/checkout@v2
+          - name: Build Docker image
+              run: docker build -t hims0301/calculator_devops:latest .
+          - name: Log in to Docker registry
+              uses: docker/login-action@v1
               with:
-                java-version: '19'
-                distribution: 'temurin'
-                cache: maven
-            - name: Build with Maven
-                run: mvn -B package --file pom.xml
-
-        publish:
-            runs-on: ubuntu-latest
-            steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
-            - name: Build Docker image
-                run: docker build -t hims0301/calculator_devops:latest .
-
-            - name: Log in to Docker registry
-                uses: docker/login-action@v1
-                with:
-                    registry: docker.io
-                    username: ${{ secrets.DOCKER_USERNAME }}
-                    password: ${{ secrets.DOCKER_PASSWORD }}
-
-            - name: Push Docker image
-                run: docker push hims0301/calculator_devops:latest
-
-
-        deploy:
-            needs: publish
-            runs-on: self-hosted
-            steps:
-              - name: Pull Docker image
-                run: docker pull hims0301/calculator_devops:latest
-              - name: Stop running calculator-container
-                run: docker stop calculator-container || true
-              - name: remove container named calculator-container
-                run: docker rm calculator-container || true
-              - name: Start new container
-                run: docker run --name calculator-container -d -t hims0301/calculator_devops:latest java -jar calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar
+                  registry: docker.io
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_PASSWORD }}
+          - name: Push Docker image
+              run: docker push hims0301/calculator_devops:latest
+      deploy:
+        needs: publish
+        runs-on: self-hosted
+        steps:
+          - name: Pull Docker image
+            run: docker pull hims0301/calculator_devops:latest
+          - name: Stop running calculator-container
+            run: docker stop calculator-container || true
+          - name: remove container named calculator-container
+            run: docker rm calculator-container || true
+          - name: Start new container
+            run: docker run --name calculator-container -d -t hims0301/calculator_devops:latest      
+            java -jar calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 **Dockerfile -**
-
+  
     FROM openjdk:19
     COPY target/calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar ./
     WORKDIR ./
-    CMD ["java", "-cp","calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar","org.example.Calculator"]
-
+    CMD ["java", "-cp","calc_mini_proj-1.0-SNAPSHOT-jar-with-dependencies.jar",
+    "org.example.Calculator"]
+  
 
 **GROK pattern -**
-
+  ```
     %{HTTPDATE:timestamp\_string} \[%{GREEDYDATA:thread}\] \[%{LOGLEVEL:level}\] %{GREEDYDATA:logger} \- %{GREEDYDATA:message}
+  ```
 
 ## **Thank You !**
